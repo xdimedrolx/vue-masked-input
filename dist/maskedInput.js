@@ -1,6 +1,6 @@
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-import InputMask from 'inputmask-core';
+var InputMask = require('inputmask-core');
 import ffpoly from './ff-polyfill'; // Firefox Polyfill for focus events
 
 ffpoly();
@@ -70,6 +70,7 @@ export default {
     },
     value: function value(newValue) {
       if (this.maskCore) this.maskCore.setValue(newValue); // For multiple inputs support
+      this.updateToCoreState();
     }
   },
 
@@ -168,7 +169,7 @@ export default {
             this.updateToCoreState();
           }
           break;
-          
+
         // backspace Android
         case 229:
           e.preventDefault();
@@ -327,6 +328,7 @@ export default {
         });
         this.$emit('input', '', '');
       }
+      this.$emit('blur');
     },
     setNativeSelection: function setNativeSelection() {
       this.maskCore.selection = {
